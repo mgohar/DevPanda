@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dev Panda</title>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        background-color: rgb(184, 0, 0);
+      }
+      canvas{
+        position: sticky;
+        top:0
+      }
+      .animation-height{
+        position: relative;
+        height: 400vh;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-282c08fd.js"></script>
+  </head>
+  <body>
+    <main>
+      <div style="background-color: rgb(151, 150, 255); height: 100vh"></div>
+      <div class="animation-height">
+        <canvas class="canvas" data-marker="true"></canvas>
+      </div>
+      <div style="background-color: rgb(151, 150, 255); height: 100vh"></div>
+    </main>
+    <!-- SCRIPTS===================================== -->
+
+    <script type="x-shader/x-vertex" id="vertexshader">
+      varying vec2 vUv;
+          void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+          }
+    </script>
+
+    <script type="x-shader/x-fragment" id="fragmentshader">
+      uniform sampler2D baseTexture;
+      uniform sampler2D bloomTexture1;
+      uniform sampler2D bloomTexture2;
+      varying vec2 vUv;
+      void main() {
+        vec4 baseColor = texture2D(baseTexture, vUv);
+        vec4 bloomColor1 = texture2D(bloomTexture1, vUv);
+        vec4 bloomColor2 = texture2D(bloomTexture2, vUv);
+        gl_FragColor = bloomColor1 + bloomColor2;	
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    
+    <!-- <script type="module" src="./spline.js"></script> -->
+    <!-- <script type="module" src="https://chatpanda.b-cdn.net/DevPanda/index-2b6dee1b.js"></script> -->
+    <!-- <script type="module" src="./bg.js"></script> -->
+    <!-- <script type="module" src="https://chatpanda.b-cdn.net/Fluid-anim/assets/fluidanim.js"></script> -->
+  </body>
+</html>
